@@ -164,7 +164,7 @@ export const handlers = [
     return HttpResponse.json({ users: safeUsers });
   }),
 
-  //  Project Handlers 
+  //  Project Handlers
 
   http.get("http://localhost:4000/projects", ({ request }) => {
     const currentUser = getCurrentUser(request);
@@ -319,7 +319,7 @@ export const handlers = [
         description: body.description || "",
         status: "todo" as TaskStatus,
         priority: (body.priority || "medium") as TaskPriority,
-        project_id: projectId, 
+        project_id: projectId,
         assignee_id: body.assignee_id || null,
         created_by: currentUser.id,
         due_date: body.due_date || null,
@@ -363,4 +363,6 @@ export const handlers = [
     tasks.splice(idx, 1);
     return new HttpResponse(null, { status: 204 });
   }),
+
+  
 ];

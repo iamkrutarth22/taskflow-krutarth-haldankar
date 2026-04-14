@@ -3,8 +3,8 @@ export function AuthLayout ({ children }: any) {
     <div className='min-h-screen grid grid-cols-1 lg:grid-cols-2'>
       <div className='hidden lg:flex flex-col justify-between bg-blue-600 p-16'>
         
-        <div className='flex items-center gap-2'>
-          <div className='w-8 h-8 bg-white rounded-md flex items-center justify-center'>
+        <div className='flex mt-30 items-center justify-center gap-2'>
+          <div className='w-10 h-10 bg-white rounded-md flex items-center justify-center'>
             <svg width='16' height='16' viewBox='0 0 16 16' fill='none'>
               <path
                 d='M2 4h12M2 8h8M2 12h5'
@@ -14,22 +14,10 @@ export function AuthLayout ({ children }: any) {
               />
             </svg>
           </div>
-          <span className='font-bold text-xl text-white'>TaskFlow</span>
+          <span className='font-bold text-4xl text-white'>TaskFlow</span>
         </div>
 
-        {/* Center text */}
-        <div className='space-y-4 max-w-sm'>
-          <h1 className='text-3xl font-bold text-white leading-snug'>
-            Manage your team
-            <br />
-            with clarity and speed.
-          </h1>
-          <p className='text-blue-200 text-sm'>
-            Plan projects, track tasks, and collaborate effortlessly in one
-            unified workspace.
-          </p>
-        </div>
-
+     
         <p className='text-blue-300 text-xs'>
           © 2026 TaskFlow · Privacy · Terms
         </p>

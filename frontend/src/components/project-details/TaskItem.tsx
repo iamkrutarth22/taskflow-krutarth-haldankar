@@ -1,4 +1,3 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import type { ITask } from '@/models/ITask'
 
 type Props = {
@@ -7,7 +6,6 @@ type Props = {
   onEdit: () => void
   onDelete: () => void
   onStatusChange: (status: string) => void
-  STATUS_COLORS: Record<string, string>
   PRIORITY_COLORS: Record<string, string>
 }
 
@@ -17,15 +15,21 @@ export default function TaskItem ({
   onEdit,
   onDelete,
   onStatusChange,
-  STATUS_COLORS,
   PRIORITY_COLORS
 }: Props) {
   return (
     <div className='bg-white border border-gray-100  rounded-xl px-5 py-4 hover:shadow-sm flex justify-between group'>
       {/* Left */}
       <div className='flex gap-3 min-w-0'>
-        <div className={`w-2 h-2 rounded-full ${STATUS_COLORS[task.status]}`} />
-
+        <span
+          className={`w-2 h-2 rounded-full shrink-0 ${
+            task.status === 'done'
+              ? 'bg-green-500'
+              : task.status === 'in_progress'
+              ? 'bg-blue-500'
+              : 'bg-slate-400'
+          }`}
+        />
         <div>
           <p className='text-sm font-medium truncate'>{task.title}</p>
 
@@ -56,7 +60,7 @@ export default function TaskItem ({
           <option value='in_progress'>In Progress</option>
           <option value='done'>Done</option>
         </select>
-       
+
         <button
           onClick={onEdit}
           className='text-xs text-gray-400 hover:text-blue-600 px-2 py-1.5 rounded-lg hover:bg-blue-50 transition-colors opacity-0 group-hover:opacity-100'

@@ -6,32 +6,14 @@ import { useSelector } from 'react-redux'
 import type { IProject } from '@/models/IProject'
 import type { ITask } from '@/models/ITask'
 import api from '@/lib/axios'
-import { ArrowLeft, Plus,  } from 'lucide-react'
-import TaskModal from '@/components/shared/project-details/TaskModal'
+import { ArrowLeft, Plus } from 'lucide-react'
+import TaskModal from '@/components/project-details/TaskModal'
 import type { AuthState } from '@/models/IAuth'
-import ProjectFilters from '@/components/shared/project-details/ProjectFilters'
-import TaskItem from '@/components/shared/project-details/TaskItem'
+import ProjectFilters from '@/components/project-details/ProjectFilters'
+import TaskItem from '@/components/project-details/TaskItem'
+import { priorityColors, statusLabels } from '@/constants/app'
 
 const STATUS_TABS = ['All', 'Todo', 'In Progress', 'Done']
-
-const STATUS_MAP: Record<string, string> = {
-  All: 'all',
-  Todo: 'todo',
-  'In Progress': 'in_progress',
-  Done: 'done'
-}
-
-const PRIORITY_COLORS: Record<string, string> = {
-  high: 'bg-red-100 text-red-600',
-  medium: 'bg-yellow-100 text-yellow-600',
-  low: 'bg-green-100 text-green-600'
-}
-
-const STATUS_COLORS: Record<string, string> = {
-  todo: 'bg-gray-400',
-  in_progress: 'bg-blue-500',
-  done: 'bg-green-500'
-}
 
 export default function ProjectDetailPage () {
   const { id } = useParams<{ id: string }>()
@@ -99,7 +81,7 @@ export default function ProjectDetailPage () {
 
   const filteredTasks = (project?.tasks || []).filter((task: ITask) => {
     const statusMatch =
-      activeTab === 'All' || task.status === STATUS_MAP[activeTab]
+      activeTab === 'All' || task.status === statusLabels[activeTab]
     const assigneeMatch =
       assigneeFilter === 'all' ||
       (assigneeFilter === 'mine' && task.assignee_id === currentUser?.id) ||
@@ -107,7 +89,6 @@ export default function ProjectDetailPage () {
     return statusMatch && assigneeMatch
   })
 
-  
   if (isLoading)
     return (
       <div className='animate-pulse space-y-4'>
@@ -121,7 +102,6 @@ export default function ProjectDetailPage () {
       </div>
     )
 
- 
   if (isError)
     return (
       <div className='text-center py-16'>
@@ -205,8 +185,6 @@ export default function ProjectDetailPage () {
 
       {filteredTasks.length > 0 && (
         <div className='space-y-2'>
-          
-
           {filteredTasks.map((task: ITask) => (
             <TaskItem
               key={task.id}
@@ -220,8 +198,7 @@ export default function ProjectDetailPage () {
               onStatusChange={status =>
                 updateStatus({ taskId: task.id, status })
               }
-              STATUS_COLORS={STATUS_COLORS}
-              PRIORITY_COLORS={PRIORITY_COLORS}
+              PRIORITY_COLORS={priorityColors}
             />
           ))}
         </div>
