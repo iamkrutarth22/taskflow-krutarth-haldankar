@@ -4,7 +4,7 @@ import type { ITask } from '@/models/ITask'
 import type { User } from '@/models/IUser'
 import api from '@/lib/axios'
 import { X } from 'lucide-react'
-import DatePicker from '../DatePicker'
+import DatePicker from '../shared/DatePicker'
 
 type Props = {
   open: boolean

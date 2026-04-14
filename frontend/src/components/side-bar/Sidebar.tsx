@@ -3,21 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { logout } from '@/store/authSlice'
 import {
-  LayoutDashboard,
-  CheckSquare,
-  FolderOpen,
-  Archive,
+  
   LogOut,
   Menu
 } from 'lucide-react'
 import type { AuthState } from '@/models/IAuth'
+import { navItems } from '@/constants/app'
 
-const navItems = [
-  { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard', disabled: false},
-  { label: 'My Tasks', icon: CheckSquare, path: '/my-tasks', disabled: false },
-  { label: 'Projects', icon: FolderOpen, path: '/projects', disabled: false },
-  { label: 'Archive', icon: Archive, path: '/archive', disabled: false },
-]
+
 
 export default function Sidebar() {
   const dispatch = useDispatch()

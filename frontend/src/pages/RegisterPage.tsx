@@ -54,79 +54,105 @@ export default function RegisterPage () {
     if (validate()) mutate()
   }
 
-//   const clearError = (field: string) => {
-//     setErrors(prev => ({ ...prev, [field]: '' }))
-//     setServerError('')
-//   }
+  //   const clearError = (field: string) => {
+  //     setErrors(prev => ({ ...prev, [field]: '' }))
+  //     setServerError('')
+  //   }
 
   return (
-    <AuthLayout>
 
-      <div className="mb-8">
-        <h2 className="text-2xl font-semibold text-gray-900">Create account</h2>
-        <p className="text-sm text-gray-500 mt-1">Get started with your workspace.</p>
+    <AuthLayout>
+      <div className='mb-8 text-left'>
+        <h2 className='text-2xl font-semibold text-gray-900'>Create account</h2>
+        <p className='text-sm text-gray-500 mt-1'>
+          Get started with your workspace.
+        </p>
       </div>
 
       {serverError && (
-        <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 border border-red-200 p-3 rounded-lg mb-5">
-          <AlertCircle className="w-4 h-4" />
+        <div className='flex items-center gap-2 text-sm text-red-600 bg-red-50 border border-red-200 p-3 rounded-lg mb-5'>
+          <AlertCircle className='w-4 h-4' />
           {serverError}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5">
-
-        <div className="space-y-1">
-          <label className="text-xs font-semibold text-gray-500 uppercase">Full name</label>
+      <form onSubmit={handleSubmit} className='space-y-5'>
+        {/* Full Name */}
+        <div className='space-y-1 text-left'>
+          <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide'>
+            Full name
+          </label>
           <input
-            type="text"
+            type='text'
             value={name}
             onChange={e => setName(e.target.value)}
             className={`w-full px-4 py-3 border rounded-lg text-sm outline-none transition
-              ${errors.name ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500'}`}
+          ${
+            errors.name
+              ? 'border-red-400 bg-red-50'
+              : 'border-gray-200 bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500'
+          }`}
           />
-          {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
+          {errors.name && <p className='text-xs text-red-500'>{errors.name}</p>}
         </div>
 
-        <div className="space-y-1">
-          <label className="text-xs font-semibold text-gray-500 uppercase">Email address</label>
+        {/* Email */}
+        <div className='space-y-1 text-left'>
+          <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide'>
+            Email address
+          </label>
           <input
-            type="email"
+            type='email'
             value={email}
             onChange={e => setEmail(e.target.value)}
             className={`w-full px-4 py-3 border rounded-lg text-sm outline-none transition
-              ${errors.email ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500'}`}
+          ${
+            errors.email
+              ? 'border-red-400 bg-red-50'
+              : 'border-gray-200 bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500'
+          }`}
           />
-          {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
+          {errors.email && (
+            <p className='text-xs text-red-500'>{errors.email}</p>
+          )}
         </div>
 
-        <div className="space-y-1">
-          <label className="text-xs font-semibold text-gray-500 uppercase">Password</label>
+        {/* Password */}
+        <div className='space-y-1 text-left'>
+          <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide'>
+            Password
+          </label>
           <input
-            type="password"
+            type='password'
             value={password}
             onChange={e => setPassword(e.target.value)}
             className={`w-full px-4 py-3 border rounded-lg text-sm outline-none transition
-              ${errors.password ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500'}`}
+          ${
+            errors.password
+              ? 'border-red-400 bg-red-50'
+              : 'border-gray-200 bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500'
+          }`}
           />
-          {errors.password && <p className="text-xs text-red-500">{errors.password}</p>}
+          {errors.password && (
+            <p className='text-xs text-red-500'>{errors.password}</p>
+          )}
         </div>
 
         <button
-          type="submit"
+          type='submit'
           disabled={isPending}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition"
+          className='w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition active:scale-[0.99]'
         >
           {isPending ? 'Creating account...' : 'Create account'}
         </button>
-
       </form>
 
-      <p className="text-sm text-gray-500 mt-6 text-center">
+      <p className='text-sm text-gray-500 mt-6 text-center'>
         Already have an account?{' '}
-        <Link to="/login" className="text-blue-600 font-medium hover:underline">Sign in</Link>
+        <Link to='/login' className='text-blue-600 font-medium hover:underline'>
+          Sign in
+        </Link>
       </p>
-
     </AuthLayout>
   )
 }
