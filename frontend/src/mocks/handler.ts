@@ -11,11 +11,27 @@ interface DB_User {
   created_at: string;
 }
 
+// ==================== SEED DATA ====================
+
 let users: DB_User[] = [
   {
     id: "seed-user-1",
-    name: "Krutarth",
+    name: "Test user",
     email: "test@example.com",
+    password: "password123",
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: "seed-user-2",
+    name: "Priya Sharma",
+    email: "priya@example.com",
+    password: "password123",
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: "seed-user-3",
+    name: "Rahul Verma",
+    email: "rahul@example.com",
     password: "password123",
     created_at: new Date().toISOString(),
   },
@@ -25,56 +41,135 @@ let projects: IProject[] = [
   {
     id: "seed-proj-1",
     name: "Website Redesign",
-    description: "Q2 redesign project",
+    description: "Complete redesign of company website for Q2 launch",
     owner_id: "seed-user-1",
     created_at: new Date().toISOString(),
   },
   {
     id: "seed-proj-2",
-    name: "Mobile App",
-    description: "React Native project",
+    name: "Mobile App Development",
+    description: "React Native mobile application for customer engagement",
     owner_id: "seed-user-1",
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: "seed-proj-3",
+    name: "Internal Dashboard",
+    description: "Admin dashboard for team management",
+    owner_id: "seed-user-2",
     created_at: new Date().toISOString(),
   },
 ];
 
 let tasks: ITask[] = [
+  // === Overdue Tasks (for testing overdue logic) ===
   {
     id: "seed-task-1",
-    title: "Design homepage",
-    description: "Create wireframes for the homepage",
+    title: "Design homepage hero section",
+    description: "Create modern hero with new branding",
     status: "todo",
     priority: "high",
     project_id: "seed-proj-1",
     assignee_id: "seed-user-1",
     created_by: "seed-user-1",
-    due_date: "2026-04-20",
+    due_date: "2026-04-10", // ← Passed (today is 2026-04-15)
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
   {
     id: "seed-task-2",
-    title: "Setup CI/CD pipeline",
-    description: "Configure Github Actions",
+    title: "Setup payment gateway integration",
+    description: "Integrate Razorpay checkout",
     status: "in_progress",
-    priority: "medium",
-    project_id: "seed-proj-1",
+    priority: "high",
+    project_id: "seed-proj-2",
     assignee_id: "seed-user-1",
     created_by: "seed-user-1",
-    due_date: null,
+    due_date: "2026-04-05", // ← Passed
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+
+  // === Current / Upcoming Tasks ===
+  {
+    id: "seed-task-3",
+    title: "Write API documentation",
+    description: "Document all endpoints using Swagger",
+    status: "todo",
+    priority: "medium",
+    project_id: "seed-proj-1",
+    assignee_id: "seed-user-2",
+    created_by: "seed-user-1",
+    due_date: "2026-04-25",
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
   {
-    id: "seed-task-3",
-    title: "Write unit tests",
-    description: "Cover auth and task endpoints",
-    status: "done",
+    id: "seed-task-4",
+    title: "Implement dark mode toggle",
+    description: "Add theme switcher with persistence",
+    status: "in_progress",
+    priority: "medium",
+    project_id: "seed-proj-3",
+    assignee_id: "seed-user-1",
+    created_by: "seed-user-1",
+    due_date: "2026-04-18",
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: "seed-task-5",
+    title: "User profile page UI",
+    description: "Build responsive profile settings page",
+    status: "todo",
     priority: "low",
+    project_id: "seed-proj-2",
+    assignee_id: "seed-user-3",
+    created_by: "seed-user-1",
+    due_date: "2026-05-05",
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+
+  // === Completed Tasks ===
+  {
+    id: "seed-task-6",
+    title: "Setup project structure",
+    description: "Initialize monorepo and basic folder structure",
+    status: "done",
+    priority: "high",
     project_id: "seed-proj-1",
     assignee_id: "seed-user-1",
     created_by: "seed-user-1",
+    due_date: "2026-04-08",
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: "seed-task-7",
+    title: "Database schema design",
+    description: "Design relational schema for users, projects and tasks",
+    status: "done",
+    priority: "medium",
+    project_id: "seed-proj-3",
+    assignee_id: "seed-user-2",
+    created_by: "seed-user-2",
     due_date: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+
+  // === Unassigned Task (good for testing filters) ===
+  {
+    id: "seed-task-8",
+    title: "Landing page SEO optimization",
+    description: "Improve meta tags and performance",
+    status: "todo",
+    priority: "medium",
+    project_id: "seed-proj-1",
+    assignee_id: null, // ← Unassigned
+    created_by: "seed-user-1",
+    due_date: "2026-04-22",
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
@@ -363,6 +458,4 @@ export const handlers = [
     tasks.splice(idx, 1);
     return new HttpResponse(null, { status: 204 });
   }),
-
-  
 ];

@@ -54,23 +54,19 @@ export default function RegisterPage () {
     if (validate()) mutate()
   }
 
-  //   const clearError = (field: string) => {
-  //     setErrors(prev => ({ ...prev, [field]: '' }))
-  //     setServerError('')
-  //   }
-
   return (
-
     <AuthLayout>
       <div className='mb-8 text-left'>
-        <h2 className='text-2xl font-semibold text-gray-900'>Create account</h2>
-        <p className='text-sm text-gray-500 mt-1'>
+        <h2 className='text-2xl font-semibold text-gray-900 dark:text-gray-100'>
+          Create account
+        </h2>
+        <p className='text-sm text-gray-500 dark:text-gray-400 mt-1'>
           Get started with your workspace.
         </p>
       </div>
 
       {serverError && (
-        <div className='flex items-center gap-2 text-sm text-red-600 bg-red-50 border border-red-200 p-3 rounded-lg mb-5'>
+        <div className='flex items-center gap-2 text-sm text-red-600 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 p-3 rounded-lg mb-5'>
           <AlertCircle className='w-4 h-4' />
           {serverError}
         </div>
@@ -79,7 +75,7 @@ export default function RegisterPage () {
       <form onSubmit={handleSubmit} className='space-y-5'>
         {/* Full Name */}
         <div className='space-y-1 text-left'>
-          <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide'>
+          <label className='block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide'>
             Full name
           </label>
           <input
@@ -87,18 +83,18 @@ export default function RegisterPage () {
             value={name}
             onChange={e => setName(e.target.value)}
             className={`w-full px-4 py-3 border rounded-lg text-sm outline-none transition
-          ${
-            errors.name
-              ? 'border-red-400 bg-red-50'
-              : 'border-gray-200 bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500'
-          }`}
+              ${
+                errors.name
+                  ? 'border-red-400 bg-red-50 dark:bg-red-950'
+                  : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-950 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900 focus:border-blue-500'
+              } text-gray-900 dark:text-gray-100`}
           />
           {errors.name && <p className='text-xs text-red-500'>{errors.name}</p>}
         </div>
 
         {/* Email */}
         <div className='space-y-1 text-left'>
-          <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide'>
+          <label className='block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide'>
             Email address
           </label>
           <input
@@ -106,11 +102,11 @@ export default function RegisterPage () {
             value={email}
             onChange={e => setEmail(e.target.value)}
             className={`w-full px-4 py-3 border rounded-lg text-sm outline-none transition
-          ${
-            errors.email
-              ? 'border-red-400 bg-red-50'
-              : 'border-gray-200 bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500'
-          }`}
+              ${
+                errors.email
+                  ? 'border-red-400 bg-red-50 dark:bg-red-950'
+                  : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-950 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900 focus:border-blue-500'
+              } text-gray-900 dark:text-gray-100`}
           />
           {errors.email && (
             <p className='text-xs text-red-500'>{errors.email}</p>
@@ -119,7 +115,7 @@ export default function RegisterPage () {
 
         {/* Password */}
         <div className='space-y-1 text-left'>
-          <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide'>
+          <label className='block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide'>
             Password
           </label>
           <input
@@ -127,11 +123,11 @@ export default function RegisterPage () {
             value={password}
             onChange={e => setPassword(e.target.value)}
             className={`w-full px-4 py-3 border rounded-lg text-sm outline-none transition
-          ${
-            errors.password
-              ? 'border-red-400 bg-red-50'
-              : 'border-gray-200 bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500'
-          }`}
+              ${
+                errors.password
+                  ? 'border-red-400 bg-red-50 dark:bg-red-950'
+                  : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-950 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900 focus:border-blue-500'
+              } text-gray-900 dark:text-gray-100`}
           />
           {errors.password && (
             <p className='text-xs text-red-500'>{errors.password}</p>
@@ -141,15 +137,18 @@ export default function RegisterPage () {
         <button
           type='submit'
           disabled={isPending}
-          className='w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition active:scale-[0.99]'
+          className='w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition active:scale-[0.99] disabled:opacity-70'
         >
           {isPending ? 'Creating account...' : 'Create account'}
         </button>
       </form>
 
-      <p className='text-sm text-gray-500 mt-6 text-center'>
+      <p className='text-sm text-gray-500 dark:text-gray-400 mt-6 text-center'>
         Already have an account?{' '}
-        <Link to='/login' className='text-blue-600 font-medium hover:underline'>
+        <Link
+          to='/login'
+          className='text-blue-600 dark:text-blue-400 font-medium hover:underline'
+        >
           Sign in
         </Link>
       </p>

@@ -4,7 +4,7 @@ import axios from '@/lib/axios'
 import type { IProject } from '@/models/IProject'
 import type { ITask } from '@/models/ITask'
 import { useNavigate } from 'react-router-dom'
-import {  isPast, parseISO } from 'date-fns'
+import { isPast, parseISO } from 'date-fns'
 import type { AuthState } from '@/models/IAuth'
 import { StatCard } from '@/components/dashboard/StatCard'
 import RecentProjectCard from '@/components/dashboard/RecentProjectCard'
@@ -54,29 +54,29 @@ export default function DashboardPage () {
 
   if (isLoading) {
     return (
-      <div className='p-8 space-y-6'>
-        <div className='h-8 w-48 bg-gray-200 rounded animate-pulse' />
-        <div className='grid grid-cols-3 gap-4'>
+      <div className='p-6 md:p-8 bg-gray-50 dark:bg-gray-950 min-h-screen space-y-6'>
+        <div className='h-8 w-48 bg-gray-200 dark:bg-gray-800 rounded animate-pulse' />
+        <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
           {[1, 2, 3].map(i => (
             <div
               key={i}
-              className='h-24 bg-gray-200 rounded-xl animate-pulse'
+              className='h-24 bg-gray-200 dark:bg-gray-800 rounded-xl animate-pulse'
             />
           ))}
         </div>
-        <div className='h-64 bg-gray-200 rounded-xl animate-pulse' />
+        <div className='h-64 bg-gray-200 dark:bg-gray-800 rounded-xl animate-pulse' />
       </div>
     )
   }
 
   return (
-    <div className='p-6 md:p-8 max-w-5xl space-y-8'>
+    <div className='p-6 md:p-8 max-w-5xl space-y-8 bg-gray-50 dark:bg-gray-950 min-h-screen'>
       {/* Header */}
       <div>
-        <h2 className='text-2xl font-semibold text-gray-900'>
+        <h2 className='text-2xl font-semibold text-gray-900 dark:text-gray-100'>
           Welcome back, {user?.name?.split(' ')[0]}
         </h2>
-        <p className='text-sm text-muted-foreground mt-1'>
+        <p className='text-sm text-gray-500 dark:text-gray-400 mt-1'>
           Here's what's happening across your workspace.
         </p>
       </div>
@@ -102,21 +102,24 @@ export default function DashboardPage () {
         />
       </div>
 
+      {/* Recent Tasks */}
       <div>
-        <h2 className='text-base font-semibold text-gray-800 mb-3'>
+        <h2 className='text-base font-semibold text-gray-800 dark:text-gray-200 mb-3'>
           My Recent Tasks
         </h2>
 
         {recentTasks.length === 0 ? (
-          <div className='border rounded-xl p-10 text-center text-muted-foreground'>
+          <div className='border border-gray-200 dark:border-gray-800 rounded-xl p-10 text-center bg-gray-50 dark:bg-gray-950'>
             <p className='text-4xl mb-3'>📋</p>
-            <p className='font-medium'>No tasks assigned to you yet</p>
-            <p className='text-sm mt-1'>
+            <p className='font-medium text-gray-700 dark:text-gray-200'>
+              No tasks assigned to you yet
+            </p>
+            <p className='text-sm mt-1 text-gray-500 dark:text-gray-400'>
               Head to a project and create a task assigned to yourself.
             </p>
           </div>
         ) : (
-          <div className=' rounded-xl border-gray-200  border overflow-hidden'>
+          <div className='rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden bg-gray-50 dark:bg-gray-950'>
             {recentTasks.map(
               task =>
                 projectsData && (
@@ -131,10 +134,10 @@ export default function DashboardPage () {
         )}
       </div>
 
-      {/* Projects Quick Access */}
+      {/* Your Projects */}
       {(projectsData?.length ?? 0) > 0 && (
         <div>
-          <h2 className='text-base font-semibold text-gray-800 mb-3'>
+          <h2 className='text-base font-semibold text-gray-800 dark:text-gray-200 mb-3'>
             Your Projects
           </h2>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-3'>
@@ -145,13 +148,15 @@ export default function DashboardPage () {
                 <div
                   key={p.id}
                   onClick={() => navigate(`/projects/${p.id}`)}
-                  className='border border-gray-200 rounded-xl p-4 hover:bg-gray-50 cursor-pointer transition-colors'
+                  className='border border-gray-200 dark:border-gray-800 rounded-xl p-4  cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-blue-200 dark:hover:border-blue-800 hover:-translate-y-0.5'
                 >
-                  <p className='font-medium text-gray-800 text-sm'>{p.name}</p>
-                  <p className='text-xs text-muted-foreground mt-0.5 truncate'>
+                  <p className='font-medium text-gray-800 dark:text-gray-200 text-sm'>
+                    {p.name}
+                  </p>
+                  <p className='text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate'>
                     {p.description || 'No description'}
                   </p>
-                  <p className='text-xs text-muted-foreground mt-2'>
+                  <p className='text-xs text-gray-500 dark:text-gray-400 mt-2'>
                     {count} task{count !== 1 ? 's' : ''}
                   </p>
                 </div>

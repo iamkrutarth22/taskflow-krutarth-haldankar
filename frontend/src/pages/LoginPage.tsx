@@ -23,7 +23,7 @@ export default function LoginPage () {
     },
     onSuccess: data => {
       dispatch(login({ token: data.token, user: data.user }))
-      navigate('/projects')
+      navigate('/dashboard')
     },
     onError: (err: any) => {
       const fields = err.response?.data?.fields
@@ -50,103 +50,18 @@ export default function LoginPage () {
   }
 
   return (
-    // <AuthLayout>
-    //   <div className='mb-8'>
-    //     <h2 className='text-2xl font-semibold text-gray-900'>Sign in</h2>
-    //     <p className='text-sm text-gray-500 mt-1'>
-    //       Enter your workspace credentials.
-    //     </p>
-    //   </div>
-    //   {serverError && (
-    //     <div className='flex items-center gap-2 text-sm text-red-600 bg-red-50 border border-red-200 p-3 rounded-lg mb-5'>
-    //       <AlertCircle className='w-4 h-4' />
-    //       {serverError}
-    //     </div>
-    //   )}
-    //   <form onSubmit={handleSubmit} className='space-y-5'>
-    //     <div className='space-y-1'>
-    //       <label className='text-xs font-semibold text-gray-500 uppercase'>
-    //         Email address
-    //       </label>
-    //       <input
-    //         type='email'
-    //         value={email}
-    //         onChange={e => {
-    //           setEmail(e.target.value)
-    //           setServerError('')
-    //         }}
-    //         className={`w-full px-4 py-3 border rounded-lg text-sm outline-none transition
-    //           ${
-    //             errors.email
-    //               ? 'border-red-400 bg-red-50'
-    //               : 'border-gray-200 bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500'
-    //           }`}
-    //       />
-    //       {errors.email && (
-    //         <p className='text-xs text-red-500'>{errors.email}</p>
-    //       )}
-    //     </div>
-
-    //     <div className='space-y-1'>
-    //       <div className='flex justify-between'>
-    //         <label className='text-xs font-semibold text-gray-500 uppercase'>
-    //           Password
-    //         </label>
-    //         <button
-    //           type='button'
-    //           className='text-xs text-blue-600 hover:underline'
-    //         >
-    //           Forgot password?
-    //         </button>
-    //       </div>
-    //       <input
-    //         type='password'
-    //         value={password}
-    //         onChange={e => {
-    //           setPassword(e.target.value)
-    //           setServerError('')
-    //         }}
-    //         className={`w-full px-4 py-3 border rounded-lg text-sm outline-none transition
-    //           ${
-    //             errors.password
-    //               ? 'border-red-400 bg-red-50'
-    //               : 'border-gray-200 bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500'
-    //           }`}
-    //       />
-    //       {errors.password && (
-    //         <p className='text-xs text-red-500'>{errors.password}</p>
-    //       )}
-    //     </div>
-
-    //     <button
-    //       type='submit'
-    //       disabled={isPending}
-    //       className='w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition'
-    //     >
-    //       {isPending ? 'Signing in...' : 'Sign in'}
-    //     </button>
-    //   </form>
-    //   <p className='text-sm text-gray-500 mt-6 text-center'>
-    //     Don't have an account?{' '}
-    //     <Link
-    //       to='/register'
-    //       className='text-blue-600 font-medium hover:underline'
-    //     >
-    //       Sign up
-    //     </Link>
-    //   </p>{' '}
-    // </AuthLayout>
-
     <AuthLayout>
       <div className='mb-8 text-left'>
-        <h2 className='text-2xl font-semibold text-gray-900'>Sign in</h2>
-        <p className='text-sm text-gray-500 mt-1'>
+        <h2 className='text-2xl font-semibold text-gray-900 dark:text-gray-100'>
+          Sign in
+        </h2>
+        <p className='text-sm text-gray-500 dark:text-gray-400 mt-1'>
           Enter your workspace credentials.
         </p>
       </div>
 
       {serverError && (
-        <div className='flex items-center gap-2 text-sm text-red-600 bg-red-50 border border-red-200 p-3 rounded-lg mb-5'>
+        <div className='flex items-center gap-2 text-sm text-red-600 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 p-3 rounded-lg mb-5'>
           <AlertCircle className='w-4 h-4' />
           {serverError}
         </div>
@@ -155,7 +70,7 @@ export default function LoginPage () {
       <form onSubmit={handleSubmit} className='space-y-5'>
         {/* Email */}
         <div className='space-y-1 text-left'>
-          <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide'>
+          <label className='block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide'>
             Email address
           </label>
           <input
@@ -166,11 +81,11 @@ export default function LoginPage () {
               setServerError('')
             }}
             className={`w-full px-4 py-3 border rounded-lg text-sm outline-none transition
-          ${
-            errors.email
-              ? 'border-red-400 bg-red-50'
-              : 'border-gray-200 bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500'
-          }`}
+              ${
+                errors.email
+                  ? 'border-red-400 bg-red-50 dark:bg-red-950'
+                  : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-950 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900 focus:border-blue-500'
+              } text-gray-900 dark:text-gray-100`}
           />
           {errors.email && (
             <p className='text-xs text-red-500'>{errors.email}</p>
@@ -180,10 +95,9 @@ export default function LoginPage () {
         {/* Password */}
         <div className='space-y-1 text-left'>
           <div className='flex justify-between items-center'>
-            <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide'>
+            <label className='block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide'>
               Password
             </label>
-            
           </div>
 
           <input
@@ -194,11 +108,11 @@ export default function LoginPage () {
               setServerError('')
             }}
             className={`w-full px-4 py-3 border rounded-lg text-sm outline-none transition
-          ${
-            errors.password
-              ? 'border-red-400 bg-red-50'
-              : 'border-gray-200 bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500'
-          }`}
+              ${
+                errors.password
+                  ? 'border-red-400 bg-red-50 dark:bg-red-950'
+                  : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-950 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900 focus:border-blue-500'
+              } text-gray-900 dark:text-gray-100`}
           />
           {errors.password && (
             <p className='text-xs text-red-500'>{errors.password}</p>
@@ -208,17 +122,17 @@ export default function LoginPage () {
         <button
           type='submit'
           disabled={isPending}
-          className='w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition'
+          className='w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition disabled:opacity-70'
         >
           {isPending ? 'Signing in...' : 'Sign in'}
         </button>
       </form>
 
-      <p className='text-sm text-gray-500 mt-6 text-center'>
+      <p className='text-sm text-gray-500 dark:text-gray-400 mt-6 text-center'>
         Don’t have an account?{' '}
         <Link
           to='/register'
-          className='text-blue-600 font-medium hover:underline'
+          className='text-blue-600 dark:text-blue-400 font-medium hover:underline'
         >
           Sign up
         </Link>
