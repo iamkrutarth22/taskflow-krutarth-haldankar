@@ -6,6 +6,7 @@ import RegisterPage from '@/pages/RegisterPage'
 import DashboardPage from '@/pages/DashboardPage'
 import MyTasksPage from '@/pages/MyTasksPage'
 import { createBrowserRouter, Navigate } from 'react-router-dom'
+import NotFoundPage from '@/pages/PageNotFound'
 
 export const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
@@ -19,7 +20,8 @@ export const router = createBrowserRouter([
       { path: 'dashboard', element: <DashboardPage /> },
       { path: 'my-tasks', element: <MyTasksPage /> },
       { path: 'projects', element: <ProjectsPage /> },
-      { path: 'projects/:id', element: <ProjectDetailsPage /> }
+      { path: 'projects/:id', element: <ProjectDetailsPage /> },
+      { path: '*', element: <NotFoundPage /> }
     ]
   }
 ])

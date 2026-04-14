@@ -32,7 +32,6 @@ export default function TaskModal ({
   const [titleError, setTitleError] = useState('')
 
   useEffect(() => {
-    // if edit mode
     if (task) {
       setTitle(task.title)
       setDescription(task.description || '')
@@ -60,7 +59,6 @@ export default function TaskModal ({
     enabled: open
   })
 
-  // if new task then create else update
   const { mutate, isPending } = useMutation({
     mutationFn: async () => {
       const payload = {
@@ -105,23 +103,23 @@ export default function TaskModal ({
         onClick={onClose}
       />
 
-      <div className='relative bg-white h-full w-full max-w-md shadow-2xl flex flex-col'>
-        <div className='flex items-center justify-between px-6 py-5 border-b border-gray-100'>
+      <div className='relative bg-gray-50 dark:bg-gray-950 h-full w-full max-w-md shadow-2xl flex flex-col border-l border-gray-200 dark:border-gray-800'>
+        <div className='flex items-center justify-between px-6 py-5 border-b border-gray-200 dark:border-gray-800'>
           <div>
-            <h2 className='text-base font-bold text-gray-900'>
+            <h2 className='text-base font-bold text-gray-900 dark:text-gray-100'>
               {isEditing ? 'Edit Task' : 'New Task'}
             </h2>
             {isEditing && (
-              <p className='text-xs text-gray-400 mt-0.5 line-clamp-1'>
+              <p className='text-xs text-gray-400 dark:text-gray-500 mt-0.5 line-clamp-1'>
                 {task.title}
               </p>
             )}
           </div>
           <button
             onClick={onClose}
-            className='w-7 h-7 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors'
+            className='w-7 h-7 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors'
           >
-            <X className='w-4 h-4 text-gray-400' />
+            <X className='w-4 h-4 text-gray-400 dark:text-gray-500' />
           </button>
         </div>
 
@@ -131,7 +129,7 @@ export default function TaskModal ({
         >
           {/* Title */}
           <div className='space-y-1.5'>
-            <label className='text-xs font-semibold text-gray-500 uppercase tracking-wide'>
+            <label className='text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide'>
               Title *
             </label>
             <input
@@ -142,11 +140,11 @@ export default function TaskModal ({
                 setTitleError('')
               }}
               placeholder='e.g. Finalize Landing Page Hero'
-              className={`w-full px-4 py-2.5 border rounded-lg text-sm outline-none transition-all
+              className={`w-full px-4 py-2.5 border rounded-lg text-sm outline-none transition-all bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100
                 ${
                   titleError
-                    ? 'border-red-400 bg-red-50'
-                    : 'border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100'
+                    ? 'border-red-400 bg-red-50 dark:bg-red-950'
+                    : 'border-gray-200 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900'
                 }`}
             />
             {titleError && <p className='text-xs text-red-500'>{titleError}</p>}
@@ -154,7 +152,7 @@ export default function TaskModal ({
 
           {/* Description */}
           <div className='space-y-1.5'>
-            <label className='text-xs font-semibold text-gray-500 uppercase tracking-wide'>
+            <label className='text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide'>
               Description
             </label>
             <textarea
@@ -162,19 +160,19 @@ export default function TaskModal ({
               onChange={e => setDescription(e.target.value)}
               placeholder='Update the headline and primary CTA...'
               rows={3}
-              className='w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100 resize-none'
+              className='w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-lg text-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900 bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 resize-none'
             />
           </div>
 
           <div className='grid grid-cols-2 gap-3'>
             <div className='space-y-1.5'>
-              <label className='text-xs font-semibold text-gray-500 uppercase tracking-wide'>
+              <label className='text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide'>
                 Status
               </label>
               <select
                 value={status}
                 onChange={e => setStatus(e.target.value)}
-                className='w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm outline-none focus:border-blue-500 bg-white cursor-pointer'
+                className='w-full px-3 py-2.5 border border-gray-200 dark:border-gray-700 rounded-lg text-sm outline-none focus:border-blue-500 bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 cursor-pointer'
               >
                 <option value='todo'>Todo</option>
                 <option value='in_progress'>In Progress</option>
@@ -183,13 +181,13 @@ export default function TaskModal ({
             </div>
 
             <div className='space-y-1.5'>
-              <label className='text-xs font-semibold text-gray-500 uppercase tracking-wide'>
+              <label className='text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide'>
                 Priority
               </label>
               <select
                 value={priority}
                 onChange={e => setPriority(e.target.value)}
-                className='w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm outline-none focus:border-blue-500 bg-white cursor-pointer'
+                className='w-full px-3 py-2.5 border border-gray-200 dark:border-gray-700 rounded-lg text-sm outline-none focus:border-blue-500 bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 cursor-pointer'
               >
                 <option value='low'>Low</option>
                 <option value='medium'>Medium</option>
@@ -198,16 +196,15 @@ export default function TaskModal ({
             </div>
           </div>
 
-          {/* Assignee + Due date */}
           <div className='grid grid-cols-2 gap-3'>
             <div className='space-y-1.5'>
-              <label className='text-xs font-semibold text-gray-500 uppercase tracking-wide'>
+              <label className='text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide'>
                 Assignee
               </label>
               <select
                 value={assigneeId}
                 onChange={e => setAssigneeId(e.target.value)}
-                className='w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm outline-none focus:border-blue-500 bg-white cursor-pointer'
+                className='w-full px-3 py-2.5 border border-gray-200 dark:border-gray-700 rounded-lg text-sm outline-none focus:border-blue-500 bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 cursor-pointer'
               >
                 <option value=''>Unassigned</option>
                 {users?.map(user => (
@@ -219,20 +216,20 @@ export default function TaskModal ({
             </div>
 
             <div className='space-y-1.5'>
-              <label className='text-xs font-semibold text-gray-500 uppercase tracking-wide'>
+              <label className='text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide'>
                 Due Date
               </label>
-
               <DatePicker dueDate={dueDate} setDueDate={setDueDate} />
             </div>
           </div>
         </form>
-        <div className='px-6 py-4 border-t border-gray-100 flex items-center gap-3'>
+
+        <div className='px-6 py-4 border-t border-gray-200 dark:border-gray-800 flex items-center gap-3'>
           {isEditing && (
             <button
               type='button'
               onClick={onClose}
-              className='px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 rounded-lg transition-colors font-medium'
+              className='px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950 rounded-lg transition-colors font-medium'
             >
               Delete Task
             </button>
@@ -241,14 +238,14 @@ export default function TaskModal ({
             <button
               type='button'
               onClick={onClose}
-              className='px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors'
+              className='px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors'
             >
               Cancel
             </button>
             <button
               onClick={handleSubmit}
               disabled={isPending}
-              className='px-4 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition-colors cursor-pointer'
+              className='px-4 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition-colors'
             >
               {isPending
                 ? isEditing

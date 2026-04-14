@@ -11,9 +11,16 @@ import TaskModal from '@/components/project-details/TaskModal'
 import type { AuthState } from '@/models/IAuth'
 import ProjectFilters from '@/components/project-details/ProjectFilters'
 import TaskItem from '@/components/project-details/TaskItem'
-import { priorityColors, statusLabels } from '@/constants/app'
+import { priorityColors } from '@/constants/app'
 
 const STATUS_TABS = ['All', 'Todo', 'In Progress', 'Done']
+
+const STATUS_MAP: Record<string, string> = {
+  All: 'all',
+  Todo: 'todo',
+  'In Progress': 'in_progress',
+  Done: 'done'
+}
 
 export default function ProjectDetailPage () {
   const { id } = useParams<{ id: string }>()
@@ -69,7 +76,6 @@ export default function ProjectDetailPage () {
       queryClient.invalidateQueries({ queryKey: ['project', id] })
     }
   })
-
   const { mutate: deleteTask } = useMutation({
     mutationFn: async (taskId: string) => {
       await api.delete(`/tasks/${taskId}`)
@@ -81,7 +87,7 @@ export default function ProjectDetailPage () {
 
   const filteredTasks = (project?.tasks || []).filter((task: ITask) => {
     const statusMatch =
-      activeTab === 'All' || task.status === statusLabels[activeTab]
+      activeTab === 'All' || task.status === STATUS_MAP[activeTab]
     const assigneeMatch =
       assigneeFilter === 'all' ||
       (assigneeFilter === 'mine' && task.assignee_id === currentUser?.id) ||
@@ -91,12 +97,15 @@ export default function ProjectDetailPage () {
 
   if (isLoading)
     return (
-      <div className='animate-pulse space-y-4'>
-        <div className='h-6 bg-gray-100 rounded w-48' />
-        <div className='h-4 bg-gray-100 rounded w-64' />
+      <div className='animate-pulse space-y-4 p-6'>
+        <div className='h-6 bg-gray-100 dark:bg-gray-800 rounded w-48' />
+        <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-64' />
         <div className='mt-6 space-y-3'>
           {[1, 2, 3].map(i => (
-            <div key={i} className='h-16 bg-gray-100 rounded-xl' />
+            <div
+              key={i}
+              className='h-16 bg-gray-100 dark:bg-gray-800 rounded-xl'
+            />
           ))}
         </div>
       </div>
@@ -105,10 +114,12 @@ export default function ProjectDetailPage () {
   if (isError)
     return (
       <div className='text-center py-16'>
-        <p className='text-gray-400 text-sm mb-4'>Failed to load project.</p>
+        <p className='text-gray-400 dark:text-gray-500 text-sm mb-4'>
+          Failed to load project.
+        </p>
         <button
           onClick={() => navigate('/projects')}
-          className='text-blue-600 text-sm hover:underline'
+          className='text-blue-600 dark:text-blue-400 text-sm hover:underline'
         >
           Back to Projects
         </button>
@@ -116,10 +127,10 @@ export default function ProjectDetailPage () {
     )
 
   return (
-    <div>
+    <div className='p-6 lg:p-10 bg-gray-50 dark:bg-gray-950 min-h-screen'>
       <button
         onClick={() => navigate('/projects')}
-        className='flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-600 mb-5 transition-colors'
+        className='flex items-center gap-1.5 text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 mb-5 transition-colors'
       >
         <ArrowLeft className='w-4 h-4' />
         Projects
@@ -127,24 +138,37 @@ export default function ProjectDetailPage () {
 
       <div className='flex items-start justify-between mb-6'>
         <div>
-          <h1 className='text-2xl font-bold text-gray-900'>{project?.name}</h1>
+          <h2 className='text-2xl text-start font-bold text-gray-900 dark:text-gray-100'>
+            {project?.name}
+          </h2>
           {project?.description && (
-            <p className='text-sm text-gray-400 mt-1'>{project.description}</p>
+            <p className='text-sm text-start text-gray-400 dark:text-gray-500 mt-1'>
+              {project.description}
+            </p>
           )}
+          <button
+            onClick={() => {
+              setEditingTask(null)
+              setTaskModalOpen(true)
+            }}
+            className='flex mt-3 md:hidden items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shrink-0'
+          >
+            <Plus className='w-4 h-4' />
+            Add Task
+          </button>
         </div>
         <button
           onClick={() => {
             setEditingTask(null)
             setTaskModalOpen(true)
           }}
-          className='flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shrink-0'
+          className='flex max-md:hidden items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shrink-0'
         >
           <Plus className='w-4 h-4' />
           Add Task
         </button>
       </div>
 
-      {/* Filters */}
       <ProjectFilters
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -153,18 +177,17 @@ export default function ProjectDetailPage () {
         STATUS_TABS={STATUS_TABS}
       />
 
-      {/* Empty state */}
       {filteredTasks.length === 0 && (
         <div className='text-center py-16'>
-          <div className='w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-3'>
-            <Plus className='w-6 h-6 text-gray-300' />
+          <div className='w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center mx-auto mb-3'>
+            <Plus className='w-6 h-6 text-gray-300 dark:text-gray-600' />
           </div>
-          <p className='text-gray-400 text-sm mb-1'>
+          <p className='text-gray-400 dark:text-gray-500 text-sm mb-1'>
             {activeTab !== 'All'
               ? `No ${activeTab.toLowerCase()} tasks`
               : 'No tasks yet'}
           </p>
-          <p className='text-gray-300 text-xs mb-4'>
+          <p className='text-gray-300 dark:text-gray-600 text-xs mb-4'>
             {activeTab !== 'All'
               ? 'Try a different filter'
               : 'Add your first task to get started'}
@@ -175,7 +198,7 @@ export default function ProjectDetailPage () {
                 setEditingTask(null)
                 setTaskModalOpen(true)
               }}
-              className='text-sm text-blue-600 hover:underline'
+              className='text-sm text-blue-600 dark:text-blue-400 hover:underline'
             >
               Add Task
             </button>
@@ -184,7 +207,7 @@ export default function ProjectDetailPage () {
       )}
 
       {filteredTasks.length > 0 && (
-        <div className='space-y-2'>
+        <div className='space-y-3'>
           {filteredTasks.map((task: ITask) => (
             <TaskItem
               key={task.id}
@@ -204,7 +227,6 @@ export default function ProjectDetailPage () {
         </div>
       )}
 
-      {/* add task modal */}
       <TaskModal
         open={taskModalOpen}
         onClose={() => {

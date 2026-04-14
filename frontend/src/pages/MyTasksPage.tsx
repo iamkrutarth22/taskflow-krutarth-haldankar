@@ -47,7 +47,6 @@ export default function MyTasksPage () {
       const res = await axios.patch<ITask>(`/tasks/${taskId}`, { status })
       return res.data
     },
-    // optimistic update
     onMutate: async ({ taskId, status }) => {
       await queryClient.cancelQueries({ queryKey: ['all-tasks'] })
       const previous = queryClient.getQueryData(['all-tasks', projectsData])
@@ -77,35 +76,42 @@ export default function MyTasksPage () {
 
   if (isLoading) {
     return (
-      <div className='p-8 space-y-6'>
-        <div className='h-8 w-48 bg-gray-200 rounded animate-pulse' />
+      <div className='p-8 space-y-6 bg-gray-50 dark:bg-gray-950 min-h-screen'>
+        <div className='h-8 w-48 bg-gray-200 dark:bg-gray-800 rounded animate-pulse' />
         {[1, 2, 3].map(i => (
-          <div key={i} className='h-20 bg-gray-200 rounded-xl animate-pulse' />
+          <div
+            key={i}
+            className='h-20 bg-gray-200 dark:bg-gray-800 rounded-xl animate-pulse'
+          />
         ))}
       </div>
     )
   }
 
   return (
-    <div className='p-6 md:p-8 max-w-4xl space-y-8'>
+    <div className='p-6 md:p-8 max-w-4xl space-y-8 bg-gray-50 dark:bg-gray-950 min-h-screen'>
       {/* Header */}
       <div>
-        <h2 className='text-2xl font-semibold text-gray-900'>My Tasks</h2>
-        <p className='text-sm text-muted-foreground mt-1'>
+        <h2 className='text-2xl text-start font-semibold text-gray-900 dark:text-gray-100'>
+          My Tasks
+        </h2>
+        <p className='text-sm text-start text-gray-500 dark:text-gray-400 mt-1'>
           All tasks assigned to you across every project.
         </p>
       </div>
 
       {myTasks.length === 0 ? (
-        <div className='border rounded-xl p-16 text-center text-muted-foreground'>
+        <div className='border border-gray-200 dark:border-gray-800 rounded-xl p-16 text-center bg-gray-50 dark:bg-gray-950'>
           <p className='text-5xl mb-4'>✅</p>
-          <p className='font-medium text-gray-700'>No tasks assigned to you</p>
-          <p className='text-sm mt-1'>
+          <p className='font-medium text-gray-700 dark:text-gray-200'>
+            No tasks assigned to you
+          </p>
+          <p className='text-sm mt-1 text-gray-500 dark:text-gray-400'>
             When someone assigns you a task, it will show up here.
           </p>
           <button
             onClick={() => navigate('/projects')}
-            className='mt-4 text-sm text-blue-600 hover:underline'
+            className='mt-4 text-sm text-blue-600 dark:text-blue-400 hover:underline'
           >
             Browse projects →
           </button>
@@ -120,15 +126,15 @@ export default function MyTasksPage () {
               <div key={key}>
                 <div className='flex items-center gap-2 mb-3'>
                   <span className={`w-2 h-2 rounded-full ${dot}`} />
-                  <h2 className='text-sm font-semibold text-gray-700'>
+                  <h2 className='text-sm font-semibold text-gray-700 dark:text-gray-300'>
                     {label}
                   </h2>
-                  <span className='text-xs text-muted-foreground'>
+                  <span className='text-xs text-gray-400 dark:text-gray-500'>
                     ({group.length})
                   </span>
                 </div>
 
-                <div className='border rounded-xl divide-y overflow-hidden'>
+                <div className='border border-gray-200 dark:border-gray-800 rounded-xl divide-y overflow-hidden bg-gray-50 dark:bg-gray-950'>
                   {group.map(task => (
                     <TaskRow
                       key={task.id}

@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import store, { persistor } from './store/index.ts'
+import ThemeSync from './components/shared/ThemeSync.tsx'
 
 async function enableMocking() {
   if (import.meta.env.DEV) {
@@ -18,6 +19,7 @@ enableMocking().then(() => {
     <StrictMode>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
+          <ThemeSync/>
           <App />
         </PersistGate>
       </Provider>
