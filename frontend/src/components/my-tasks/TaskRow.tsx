@@ -18,7 +18,7 @@ export function TaskRow ({
     task.due_date && task.status !== 'done' && isPast(parseISO(task.due_date))
 
   return (
-    <div className='flex flex-col sm:flex-row sm:items-center justify-between px-4 py-4 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors gap-3 border-b border-gray-200 dark:border-gray-800 last:border-b-0'>
+    <div className='flex flex-col sm:flex-row sm:items-center justify-between px-4 py-4 hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors gap-3 border-b border-gray-200 dark:border-gray-800 last:border-b-0'>
       {/* Left Section - Title + Project + Due Date */}
       <div className='min-w-0 flex-1'>
         <p className='text-sm  text-start font-medium text-gray-800 dark:text-gray-200 truncate'>
