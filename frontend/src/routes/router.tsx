@@ -1,4 +1,4 @@
-import ProtectedRoute from '@/components/protected-route/ProtectedRoute'
+
 import LoginPage from '@/pages/LoginPage'
 import ProjectDetailsPage from '@/pages/ProjectDetailsPage'
 import ProjectsPage from '@/pages/ProjectsPage'
@@ -7,6 +7,7 @@ import DashboardPage from '@/pages/DashboardPage'
 import MyTasksPage from '@/pages/MyTasksPage'
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import NotFoundPage from '@/pages/PageNotFound'
+import ProtectedRoute from '@/components/protectedroute/ProtectedRoute'
 
 export const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
