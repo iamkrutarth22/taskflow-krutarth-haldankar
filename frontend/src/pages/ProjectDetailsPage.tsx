@@ -7,10 +7,10 @@ import type { IProject } from '@/models/IProject'
 import type { ITask } from '@/models/ITask'
 import api from '@/lib/axios'
 import { ArrowLeft, Plus } from 'lucide-react'
-import TaskModal from '@/components/project-details/TaskModal'
+import TaskModal from '@/components/projectdetails/TaskModal'
 import type { AuthState } from '@/models/IAuth'
-import ProjectFilters from '@/components/project-details/ProjectFilters'
-import TaskItem from '@/components/project-details/TaskItem'
+import ProjectFilters from '@/components/projectdetails/ProjectFilters'
+import TaskItem from '@/components/projectdetails/TaskItem'
 import { priorityColors } from '@/constants/app'
 
 const STATUS_TABS = ['All', 'Todo', 'In Progress', 'Done']

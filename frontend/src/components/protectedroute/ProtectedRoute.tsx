@@ -1,7 +1,7 @@
 import type { AuthState } from '@/models/IAuth'
 import { useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router-dom'
-import Sidebar from '../side-bar/Sidebar'
+import Sidebar from '../sidebar/Sidebar'
 
 const ProtectedRoute = () => {
   const token = useSelector((state: { auth: AuthState }) => state.auth.token)

@@ -3,6 +3,10 @@ import type { ITask, TaskStatus, TaskPriority } from "@/models/ITask";
 import { http, HttpResponse } from "msw";
 import { v4 as uuidv4 } from "uuid";
 
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ;
+console.log("Mock API Base URL:", API_BASE_URL);
+
 interface DB_User {
   id: string;
   name: string;
@@ -10,8 +14,6 @@ interface DB_User {
   password: string;
   created_at: string;
 }
-
-// ==================== SEED DATA ====================
 
 let users: DB_User[] = [
   {
@@ -62,7 +64,7 @@ let projects: IProject[] = [
 ];
 
 let tasks: ITask[] = [
-  // === Overdue Tasks (for testing overdue logic) ===
+
   {
     id: "seed-task-1",
     title: "Design homepage hero section",
@@ -90,7 +92,6 @@ let tasks: ITask[] = [
     updated_at: new Date().toISOString(),
   },
 
-  // === Current / Upcoming Tasks ===
   {
     id: "seed-task-3",
     title: "Write API documentation",
@@ -159,7 +160,6 @@ let tasks: ITask[] = [
     updated_at: new Date().toISOString(),
   },
 
-  // === Unassigned Task (good for testing filters) ===
   {
     id: "seed-task-8",
     title: "Landing page SEO optimization",
@@ -189,7 +189,7 @@ const getCurrentUser = (request: Request) => {
 };
 
 export const handlers = [
-  http.post("http://localhost:4000/auth/register", async ({ request }) => {
+  http.post(`${API_BASE_URL}/auth/register`, async ({ request }) => {
     const body = (await request.json()) as any;
 
     if (!body.name || !body.email || !body.password) {
@@ -227,7 +227,7 @@ export const handlers = [
     );
   }),
 
-  http.post("http://localhost:4000/auth/login", async ({ request }) => {
+  http.post(`${API_BASE_URL}/auth/login`, async ({ request }) => {
     const body = (await request.json()) as any;
     const user = users.find(
       (u) => u.email === body.email && u.password === body.password,
@@ -246,7 +246,7 @@ export const handlers = [
   // ─── Users Handlers ───────────────────────────────────────────────
 
   // needed for assignee dropdown when creating tasks
-  http.get("http://localhost:4000/users", ({ request }) => {
+  http.get(`${API_BASE_URL}/users`, ({ request }) => {
     const currentUser = getCurrentUser(request);
     if (!currentUser)
       return HttpResponse.json({ error: "unauthorized" }, { status: 401 });
@@ -261,7 +261,7 @@ export const handlers = [
 
   //  Project Handlers
 
-  http.get("http://localhost:4000/projects", ({ request }) => {
+  http.get(`${API_BASE_URL}/projects`, ({ request }) => {
     const currentUser = getCurrentUser(request);
     if (!currentUser)
       return HttpResponse.json({ error: "unauthorized" }, { status: 401 });
@@ -278,7 +278,7 @@ export const handlers = [
     return HttpResponse.json({ projects: accessible });
   }),
 
-  http.post("http://localhost:4000/projects", async ({ request }) => {
+  http.post(`${API_BASE_URL}/projects`, async ({ request }) => {
     const currentUser = getCurrentUser(request);
     if (!currentUser)
       return HttpResponse.json({ error: "unauthorized" }, { status: 401 });
@@ -303,7 +303,7 @@ export const handlers = [
     return HttpResponse.json(project, { status: 201 });
   }),
 
-  http.get("http://localhost:4000/projects/:id", ({ request, params }) => {
+  http.get(`${API_BASE_URL}/projects/:id`, ({ request, params }) => {
     const currentUser = getCurrentUser(request);
     if (!currentUser)
       return HttpResponse.json({ error: "unauthorized" }, { status: 401 });
@@ -317,7 +317,7 @@ export const handlers = [
   }),
 
   http.patch(
-    "http://localhost:4000/projects/:id",
+    `${API_BASE_URL}/projects/:id`,
     async ({ request, params }) => {
       const currentUser = getCurrentUser(request);
       if (!currentUser)
@@ -336,7 +336,7 @@ export const handlers = [
     },
   ),
 
-  http.delete("http://localhost:4000/projects/:id", ({ request, params }) => {
+  http.delete(`${API_BASE_URL}/projects/:id`, ({ request, params }) => {
     const currentUser = getCurrentUser(request);
     if (!currentUser)
       return HttpResponse.json({ error: "unauthorized" }, { status: 401 });
@@ -353,10 +353,9 @@ export const handlers = [
     return new HttpResponse(null, { status: 204 });
   }),
 
-  //Task Handlers
 
   http.get(
-    "http://localhost:4000/projects/:id/tasks",
+    `${API_BASE_URL}/projects/:id/tasks`,
     ({ request, params }) => {
       const currentUser = getCurrentUser(request);
       if (!currentUser)
@@ -382,7 +381,7 @@ export const handlers = [
   ),
 
   http.post(
-    "http://localhost:4000/projects/:id/tasks",
+    `${API_BASE_URL}/projects/:id/tasks`,
     async ({ request, params }) => {
       const currentUser = getCurrentUser(request);
       if (!currentUser)
@@ -427,7 +426,7 @@ export const handlers = [
     },
   ),
 
-  http.patch("http://localhost:4000/tasks/:id", async ({ request, params }) => {
+  http.patch(`${API_BASE_URL}/tasks/:id`, async ({ request, params }) => {
     const currentUser = getCurrentUser(request);
     if (!currentUser)
       return HttpResponse.json({ error: "unauthorized" }, { status: 401 });
@@ -446,7 +445,7 @@ export const handlers = [
     return HttpResponse.json(tasks[idx]);
   }),
 
-  http.delete("http://localhost:4000/tasks/:id", ({ request, params }) => {
+  http.delete(`${API_BASE_URL}/tasks/:id`, ({ request, params }) => {
     const currentUser = getCurrentUser(request);
     if (!currentUser)
       return HttpResponse.json({ error: "unauthorized" }, { status: 401 });

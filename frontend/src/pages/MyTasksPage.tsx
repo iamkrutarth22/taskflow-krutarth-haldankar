@@ -6,7 +6,7 @@ import type { ITask, TaskStatus } from '@/models/ITask'
 import { useNavigate } from 'react-router-dom'
 import type { AuthState } from '@/models/IAuth'
 import { STATUS_GROUPS } from '@/constants/app'
-import { TaskRow } from '@/components/my-tasks/TaskRow'
+import { TaskRow } from '@/components/mytasks/TaskRow'
 
 export default function MyTasksPage () {
   const user = useSelector((state: { auth: AuthState }) => state.auth.user)
